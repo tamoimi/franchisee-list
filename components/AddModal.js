@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -20,6 +19,17 @@ const style = {
 };
 
 const AddModal = () => {
+ 
+  //data-post
+   const postFranchisee = async () =>{
+    const response = await (
+      await fetch()
+    )
+   }
+
+
+
+
   //react-hook-form
   const {
     register,
