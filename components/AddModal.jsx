@@ -19,16 +19,22 @@ const style = {
 };
 
 const AddModal = () => {
- 
   //data-post
-   const postFranchisee = async () =>{
+  const postFranchisee = async (data) => {
+    console.log("data", data);
     const response = await (
-      await fetch()
-    )
-   }
-
-
-
+      await fetch("/api/franchisees", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data,
+        }),
+      })
+    ).json();
+    console.log("response", response);
+  };
 
   //react-hook-form
   const {
@@ -40,8 +46,14 @@ const AddModal = () => {
   const [open, setOpen] = useState();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const submitHandler = (data) => {
+    alert("정상적으로 등록되었습니다");
+    postFranchisee(data);
+    console.log(postFranchisee);
+  };
   return (
-    <div>
+    <>
       <Button onClick={handleOpen}>가맹점 추가</Button>
       <Modal
         open={open}
@@ -53,26 +65,24 @@ const AddModal = () => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             가맹점 등록
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <form onSubmit={handleSubmit()}>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }} component="span">
+            <form onSubmit={handleSubmit(submitHandler)}>
               <label>가맹점명</label>
               <input
                 {...register("name", { required: "필수 입력값 입니다." })}
                 placeholder="상호명을 입력해주세요."
               />
-              {errors.name && <p>{errors.name.message}</p>}
-              {/* {<p>{errors.name}</p>} */}
+              {errors.name && <span>{errors.name.message}</span>}
               <br />
               <label>업종</label>
               <input
                 {...register("category", { required: "필수 입력값 입니다." })}
                 placeholder="업종을 입력해주세요."
               />
-              {<p>{errors.category}</p>}
+              {errors.category && <span>{errors.category.message}</span>}
               <br />
               <label>등록일자</label>
               <BasicDatePicker />
-              {/* date picker 사용*/}
               <br />
               <label>사업규모</label>
               <select {...register("scale")}>
@@ -87,18 +97,17 @@ const AddModal = () => {
               <input
                 {...register("fee", {
                   required: "필수 입력값 입니다.",
-                  valueAsNumber: true,
-                  validate: (value) => value > 0,
+                  
                 })}
               />
-              {<p>{errors.fee}</p>}
+              {errors.fee && <span>{errors.fee.message}</span>}
               % <br />
               <button type="submit">등록하기</button>
             </form>
           </Typography>
         </Box>
       </Modal>
-      <style>{`
+      <style jsx>{`
         .css-1wnsr1i {
           width: 500px;
           height: 550px;
@@ -117,7 +126,7 @@ const AddModal = () => {
           border: none;
         }
         `}</style>
-    </div>
+    </>
   );
 };
 

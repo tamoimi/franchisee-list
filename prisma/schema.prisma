@@ -12,6 +12,7 @@ model Franchisee {
   id              Int             @id @default(autoincrement())
   name            String
   category        String
+  registDate      DateTime        
   scale           String
   fee             Int
   createdAt       DateTime        @default(now())

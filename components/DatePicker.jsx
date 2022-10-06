@@ -10,7 +10,8 @@ export default function BasicDatePicker() {
     return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
-          label="Basic example"
+          label="시작 날짜"
+          inputFormat="yyyy-MM-dd"
           value={value}
           onChange={(newValue) => {
             setValue(newValue);
