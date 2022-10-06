@@ -107,7 +107,7 @@ const AddModal = () => {
           </Typography>
         </Box>
       </Modal>
-      <style jsx>{`
+      <style>{`
         .css-1wnsr1i {
           width: 500px;
           height: 550px;

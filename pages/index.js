@@ -53,7 +53,7 @@ const FranchiseeList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <style jsx>{`
+      <style>{`
       	.MuiPaper-root {
           width: 1000px;
           height: auto;
