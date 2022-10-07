@@ -19,6 +19,9 @@ const style = {
 };
 
 const AddModal = () => {
+  // DatePicker props를 통해 전달하고 받는다
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
   //data-post
   const postFranchisee = async (data) => {
     console.log("data", data);
@@ -29,7 +32,9 @@ const AddModal = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          data,
+          ...data,
+          registDate: selectedDate,
+          //...data -> spead함수로 내가 가지고 있는 데이터를 다 풀고 가져온 selectedDate와 더해준다
         }),
       })
     ).json();
@@ -40,10 +45,13 @@ const AddModal = () => {
   const {
     register,
     handleSubmit,
+    setValue,
+    getValues,
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
-  const [open, setOpen] = useState();
+  // 'open'의 값이 없었기 때문에 오류가 났었다 useState(false) <- 꼭 입력!
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -52,9 +60,12 @@ const AddModal = () => {
     postFranchisee(data);
     console.log(postFranchisee);
   };
+
   return (
     <>
-      <Button onClick={handleOpen}>가맹점 추가</Button>
+      <Button onClick={handleOpen} variant="contained">
+        가맹점 추가
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -65,25 +76,38 @@ const AddModal = () => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             가맹점 등록
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }} component="span">
+          <Typography
+            id="modal-modal-description"
+            sx={{ mt: 2 }}
+            component="span"
+          >
             <form onSubmit={handleSubmit(submitHandler)}>
               <label>가맹점명</label>
               <input
                 {...register("name", { required: "필수 입력값 입니다." })}
                 placeholder="상호명을 입력해주세요."
               />
-              {errors.name && <span>{errors.name.message}</span>}
-              <br />
+              <Typography variant="inherit" color="textSecondary">
+                {errors.name?.message}
+              </Typography>
+              {/* {errors.name && <p>{errors.name.message}</p>} */}
+           
               <label>업종</label>
               <input
                 {...register("category", { required: "필수 입력값 입니다." })}
                 placeholder="업종을 입력해주세요."
               />
-              {errors.category && <span>{errors.category.message}</span>}
-              <br />
+              <Typography variant="inherit" color="textSecondary">
+                {errors.category?.message}
+              </Typography>
+              {/* {errors.category && <p>{errors.category.message}</p>} */}
+        
               <label>등록일자</label>
-              <BasicDatePicker />
-              <br />
+              <BasicDatePicker
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+              />
+         
               <label>사업규모</label>
               <select {...register("scale")}>
                 <option value="small">영세</option>
@@ -91,18 +115,22 @@ const AddModal = () => {
                 <option value="medium2">중소2</option>
                 <option value="medium3">중소3</option>
                 <option value="self">일반</option>
-              </select>
-              <br />
+              </select> <br />
+             
               <label>수수료율</label>
-              <input
+              <input className="fee"
                 {...register("fee", {
                   required: "필수 입력값 입니다.",
-                  
                 })}
+                placeholder= "%"
               />
-              {errors.fee && <span>{errors.fee.message}</span>}
-              % <br />
-              <button type="submit">등록하기</button>
+              <Typography variant="inherit" color="textSecondary">
+                {errors.fee?.message}
+              </Typography>
+              {/* {errors.fee && <p>{errors.fee.message}</p>} */}
+            
+              <button type="submit" className="submit">등록하기</button>
+              <button onClick={handleClose} className="close">닫기</button>
             </form>
           </Typography>
         </Box>
@@ -113,17 +141,51 @@ const AddModal = () => {
           height: 550px;
           border: none;
           border-radius: 20px;
+        } 
+        form {
+          width: 350px;
+          margin: 0 auto;
         }
         label {
           display: inline-block;
           width: 100px;
-          height: 60px;
+          font-family: "Pretendard-Regular";
         }
         input {
-          width: 300px;
+          width: 250px;
           height: 30px;
-          background: #BAD7DF;
+          margin: 20px 0 0 0;
+          background: #EEF2E6;
           border: none;
+          padding: 0 0 0 10px;
+          font-family: "Pretendard-Regular";
+        }
+        p {
+          color: #3D8361;
+          margin: 0;
+          font-size: 14px;
+          text-align: right;
+          margin-right: 35px; 
+          font-family: "Pretendard-Regular";
+        }
+        .submit,
+        .close {
+          width: 100px;
+          height: 40px;
+          background: #EEF2E6;
+          margin: 40px 0 0 0;
+        }
+        .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
+          width: 185px;
+        }
+        .fee {
+          text-align: right;
+          padding-right: 10px;
+        }
+        select {
+          width: 80px;
+          height: 30px;
+          margin: 20px 0;
         }
         `}</style>
     </>
