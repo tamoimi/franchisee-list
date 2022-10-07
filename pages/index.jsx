@@ -9,6 +9,7 @@ import AddModal from "../components/AddModal";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { TableFooter, TablePagination } from "@mui/material";
+import index from "../styles/index.module.css";
 
 const FranchiseeList = () => {
   // pagination
@@ -59,7 +60,7 @@ const FranchiseeList = () => {
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className="container">
         <h2>등록 가맹점 리스트</h2>
         <AddModal />
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -130,49 +131,6 @@ const FranchiseeList = () => {
           </TableFooter>
         </Table>
       </TableContainer>
-      <style>{`
-      	.MuiPaper-root {
-          width: 1000px;
-          height: auto;
-          margin: 100px auto;
-          position: relative;
-          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-          font-family: "Pretendard-Regular";
-        }
-        .MuiTableHead-root {
-          background: #EEF2E6;
-        }
-        h2 {
-          text-align: center;
-        }
-        button {
-          border: none;
-          background: transparent;
-          cursor: pointer;
-        }
-        .delete:hover {
-          color: tomato;
-        }
-        .css-sghohy-MuiButtonBase-root-MuiButton-root {
-          position: absolute;
-          top: 17px;
-          right: 17px;
-          background: #3D8361;
-          margin: 0 0 20px 0;
-          font-family: "Pretendard-Regular";
-        }
-        .css-sghohy-MuiButtonBase-root-MuiButton-root:hover {
-          background: #3D8361;
-          opacity: 0.9;
-        }
-        .css-1ygcj2i-MuiTableCell-root {
-          font-size: 15px;
-          font-weight: bold;
-        }
-        .MuiTableCell-root {
-          font-family: "Pretendard-Regular";
-        }
-        `}</style>
     </>
   );
 };

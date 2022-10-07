@@ -1,0 +1,21 @@
+.container {
+  width: 1000px;
+  height: auto;
+  margin: 100px auto;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  font-family: "Pretendard-Regular";
+}
+/* thead {
+  background: #eef2e6;
+}
+h2 {
+  text-align: center;
+} */
+.delete {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+.delete:hover {
+  color: tomato;
+}

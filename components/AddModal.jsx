@@ -135,7 +135,7 @@ const AddModal = () => {
           </Typography>
         </Box>
       </Modal>
-      <style>{`
+      {/* <style>{`
         .css-1wnsr1i {
           width: 500px;
           height: 550px;
@@ -187,7 +187,7 @@ const AddModal = () => {
           height: 30px;
           margin: 20px 0;
         }
-        `}</style>
+        `}</style> */}
     </>
   );
 };
