@@ -5,12 +5,13 @@
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   font-family: "Pretendard-Regular";
 }
-/* thead {
+.tableHead {
   background: #eef2e6;
 }
-h2 {
+.h2 {
+  margin-bottom: 0;
   text-align: center;
-} */
+}
 .delete {
   border: none;
   background: transparent;
