@@ -12,11 +12,13 @@
   margin-bottom: 0;
   text-align: center;
 }
-.delete {
+.delete,
+.edit {
   border: none;
   background: transparent;
   cursor: pointer;
 }
-.delete:hover {
+.delete:hover, 
+.edit:hover {
   color: tomato;
 }
