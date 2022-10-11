@@ -5,15 +5,17 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useForm } from "react-hook-form";
 import BasicDatePicker from "./DatePicker";
+import styles from "../styles/AddModal.module.css";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 500,
+  height: 600,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  borderRadius: 4,
   boxShadow: 24,
   p: 4,
 };
@@ -61,9 +63,44 @@ const AddModal = () => {
     console.log(postFranchisee);
   };
 
+  // 사업규모 변경 이벤트
+  const scaleChangeHandler = (e) => {
+    // console.log("사업규모 변경 이벤트", e);
+    const currentScale = e.target.value;
+    // console.log("currentScale", currentScale);
+    switch (currentScale) {
+      case "small": {
+        setValue("fee", 0.5);
+        break;
+      }
+      case "medium1": {
+        setValue("fee", 1.1);
+        break;
+      }
+      case "medium2": {
+        setValue("fee", 1.25);
+        break;
+      }
+      case "medium3": {
+        setValue("fee", 1.5);
+        break;
+      }
+      case "self": {
+        setValue("fee", 2.0);
+        break;
+      }
+      default:
+        "";
+    }
+  };
+
   return (
     <>
-      <Button onClick={handleOpen} variant="contained">
+      <Button
+        onClick={handleOpen}
+        variant="contained"
+        className={styles.openBtn}
+      >
         가맹점 추가
       </Button>
       <Modal
@@ -73,7 +110,12 @@ const AddModal = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            className={styles.h2}
+          >
             가맹점 등록
           </Typography>
           <Typography
@@ -81,9 +123,13 @@ const AddModal = () => {
             sx={{ mt: 2 }}
             component="span"
           >
-            <form onSubmit={handleSubmit(submitHandler)}>
-              <label>가맹점명</label>
+            <form
+              onSubmit={handleSubmit(submitHandler)}
+              className={styles.form}
+            >
+              <label className={styles.label}>가맹점명</label>
               <input
+                className={styles.input}
                 {...register("name", { required: "필수 입력값 입니다." })}
                 placeholder="상호명을 입력해주세요."
               />
@@ -91,9 +137,9 @@ const AddModal = () => {
                 {errors.name?.message}
               </Typography>
               {/* {errors.name && <p>{errors.name.message}</p>} */}
-           
-              <label>업종</label>
+              <label className={styles.label}>업종</label>
               <input
+                className={styles.input}
                 {...register("category", { required: "필수 입력값 입니다." })}
                 placeholder="업종을 입력해주세요."
               />
@@ -101,93 +147,66 @@ const AddModal = () => {
                 {errors.category?.message}
               </Typography>
               {/* {errors.category && <p>{errors.category.message}</p>} */}
-        
-              <label>등록일자</label>
+              <label className={`${styles.label} ${styles.label3}`}>
+                등록일자
+              </label>
               <BasicDatePicker
+                className={styles.date}
                 selectedDate={selectedDate}
                 setSelectedDate={setSelectedDate}
               />
-         
-              <label>사업규모</label>
-              <select {...register("scale")}>
+              <label className={styles.label}>사업규모</label>
+              <select
+                {...register("scale")}
+                className={styles.select}
+                onChange={scaleChangeHandler}
+              >
                 <option value="small">영세</option>
                 <option value="medium1">중소1</option>
                 <option value="medium2">중소2</option>
                 <option value="medium3">중소3</option>
                 <option value="self">일반</option>
-              </select> <br />
-             
-              <label>수수료율</label>
-              <input className="fee"
+              </select>{" "}
+              <br />
+              <label className={styles.label}>수수료율</label>
+              <input
+                className={styles.input}
                 {...register("fee", {
                   required: "필수 입력값 입니다.",
                 })}
-                placeholder= "%"
+                placeholder="%"
               />
               <Typography variant="inherit" color="textSecondary">
                 {errors.fee?.message}
               </Typography>
               {/* {errors.fee && <p>{errors.fee.message}</p>} */}
-            
-              <button type="submit" className="submit">등록하기</button>
-              <button onClick={handleClose} className="close">닫기</button>
+              <div className={styles.btnBox}>
+                <button type="submit" className={styles.button}>
+                  등록하기
+                </button>
+                <button onClick={handleClose} className={styles.button}>
+                  닫기
+                </button>
+              </div>
             </form>
           </Typography>
         </Box>
       </Modal>
-      {/* <style>{`
-        .css-1wnsr1i {
-          width: 500px;
-          height: 550px;
-          border: none;
-          border-radius: 20px;
-        } 
-        form {
-          width: 350px;
-          margin: 0 auto;
-        }
-        label {
-          display: inline-block;
-          width: 100px;
-          font-family: "Pretendard-Regular";
-        }
-        input {
-          width: 250px;
-          height: 30px;
-          margin: 20px 0 0 0;
-          background: #EEF2E6;
-          border: none;
-          padding: 0 0 0 10px;
-          font-family: "Pretendard-Regular";
-        }
-        p {
-          color: #3D8361;
-          margin: 0;
+      <style>
+        {`
+        .css-adfmws-MuiTypography-root {
+          text-align: right;
+          color: tomato;
           font-size: 14px;
-          text-align: right;
-          margin-right: 35px; 
-          font-family: "Pretendard-Regular";
         }
-        .submit,
-        .close {
-          width: 100px;
-          height: 40px;
-          background: #EEF2E6;
-          margin: 40px 0 0 0;
+        .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+          margin: 30px 0 0 0;
         }
-        .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
-          width: 185px;
+        .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
+          margin: 30px 0 0 0;
         }
-        .fee {
-          text-align: right;
-          padding-right: 10px;
-        }
-        select {
-          width: 80px;
-          height: 30px;
-          margin: 20px 0;
-        }
-        `}</style> */}
+      `}
+      </style>
     </>
   );
 };
